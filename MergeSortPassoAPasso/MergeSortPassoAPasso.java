@@ -31,7 +31,6 @@ public class MergeSortPassoAPasso {
  			mergeSortPassoAPasso(arrayB);
  			merge(array, arrayA, arrayB);
 		}
-		
 	}
 	
 	private static void merge(int[] array, int[] arrayA, int[] arrayB) {
