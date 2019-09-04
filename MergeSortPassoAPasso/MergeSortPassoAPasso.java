@@ -13,50 +13,60 @@ public class MergeSortPassoAPasso {
 	}
 	
 	public static void mergeSortPassoAPasso(int[] array, int leftIndex, int rightIndex) {
+		System.out.println(Arrays.toString(array));
 		int middle = (leftIndex + rightIndex) / 2;
-		if (leftIndex < rightIndex) {	
-			mergeSortPassoAPasso(array, leftIndex, middle);
-			mergeSortPassoAPasso(array, middle + 1, rightIndex);
+		if (leftIndex < rightIndex) {
+			int sizeA = middle - leftIndex;
+			int[] arrayA = new int[sizeA];
+			for (int i = leftIndex; i < middle; i++) {
+				arrayA[i] = array[i];
+			}
+			
+			int sizeB = rightIndex - middle + 1;
+			int[] arrayB = new int[sizeB];
+ 			for (int j = middle + 1; j < rightIndex; j++) {
+				arrayB[j] = array[j];
+			}
+ 			mergeSortPassoAPasso(arrayA);
+ 			mergeSortPassoAPasso(arrayB);
+ 			merge(array, arrayA, arrayB);
 		}
-		merge(array, leftIndex, middle, rightIndex);
 		
 	}
 	
-	private static void merge(int[] array, int leftIndex, int middle, int rightIndex) {
+	private static void merge(int[] array, int[] arrayA, int[] arrayB) {
 		int[] arrayAux = new int[array.length];
-		for (int i = leftIndex; i <= rightIndex; i++) {
+		for (int i = 0; i < array.length; i++) {
 			arrayAux[i] = array[i];
 		}
 		
-		int i = leftIndex;
-		int j = middle + 1;
-		int k = leftIndex;
+		int i = 0;
+		int j = 0;
+		int k = 0;
 		
-		while (i <= middle && j <= rightIndex) {
-			if (arrayAux[i] < arrayAux[j]) {
-				array[k] = arrayAux[i];
+		while (i < arrayA.length && j < arrayB.length) {
+			if (arrayA[i] < arrayB[j]) {
+				array[k] = arrayA[i];
 				i++;
 			} else {
-				array[k] = arrayAux[j];
+				array[k] = arrayB[j];
 				j++;
 			}
 			k++;
 		}
 		
-		while (i <= middle) {
-			array[k] = array[i];
+		while (i < arrayA.length) {
+			array[k] = arrayA[i];
 			i++;
 			k++;
 		}
 		
-		while (j <= rightIndex) {
-			array[k] = array[j];
+		while (j < arrayB.length) {
+			array[k] = arrayB[j];
 			j++;
 			k++;
 		}
 		
 	}
 	
-	
-
 }
