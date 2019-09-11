@@ -6,6 +6,7 @@
 	<classpathentry kind="src" path="CountingSortPassoAPasso"/>
 	<classpathentry kind="src" path="MergeSortPassoAPasso"/>
 	<classpathentry kind="src" path="EstatisticaDeOrdem"/>
+	<classpathentry kind="src" path="EstatisticaDeOrdemSelection"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
