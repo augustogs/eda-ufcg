@@ -8,6 +8,8 @@
 	<classpathentry kind="src" path="EstatisticaDeOrdem"/>
 	<classpathentry kind="src" path="EstatisticaDeOrdemSelection"/>
 	<classpathentry kind="src" path="SelectionSortPassoAPasso"/>
+	<classpathentry kind="src" path="FilaArray"/>
+	<classpathentry kind="src" path="FilaArrayCircular"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
