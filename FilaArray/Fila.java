@@ -5,19 +5,21 @@ public class Fila {
 	private int[] fila;
 	private int head;
 	private int tail;
+	private int size;
 	
-	public Fila(int tamanho) {
-		this.fila = new int[tamanho];
+	public Fila(int size) {
+		this.fila = new int[size];
 		this.head = -1;
 		this.tail = -1;
+		this.size = 0;
 	}
 	
 	public boolean isEmpty() {
-		return (this.head == -1 && this.tail == -1);
+		return (this.size == 0);
 	}
 	
 	public boolean isFull() {
-		return this.tail == fila.length;
+		return (this.size == fila.length);
 	}
 	
 	public int element() {
@@ -25,71 +27,72 @@ public class Fila {
 	}
 	
 	public void add(int elemento) {
-		if (isFull()) throw new RuntimeException();
-		if (isEmpty()) {
-			this.head = 0;
-			this.tail = 0;
-			this.fila[0] = elemento;
+		if (!isFull()) {
+			if (isEmpty()) {
+				this.head++;
+				this.tail++;
+				this.fila[head] = elemento;
+			} else {
+				this.tail = (tail + 1) % fila.length;
+				this.fila[tail] = elemento;
+			}
+			this.size++;
 		} else {
-			this.tail++;
-			this.fila[tail] = elemento;
-		}
+			System.out.println("full");
+		}			
 	}
 	
-	public int remove() {
-		if (isEmpty()) throw new RuntimeException();
-		
-		int valor = fila[0];
-		if (this.head == this.tail) {
-			this.head = -1;
-			this.tail = -1;
+	public void remove() {	
+		if (!isEmpty()) {
+			if (this.head == this.tail) {
+				this.head = -1;
+				this.tail = -1;
+			} else {
+				this.head = (this.head + 1) % this.size;
+			}
+			this.size--;
 		} else {
-			this.head = (this.head + 1) % fila.length;
+			System.out.println("empty");
 		}
-		return valor;
 	}
 	
 	public String print() {
 		String result= "empty";
 		if (!isEmpty()) {
 			result = "";
-			for (int i = head; i <= tail; i++) {
+			int i = this.head;
+			while (i != this.tail) {
 				result += this.fila[i] + " ";
+				i = (i + 1) % this.fila.length;
 			}
-			
-		}
+			result += this.fila[tail] + " ";
+		}			
 		return result;
 	}
 	
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int tamanho = sc.nextInt();
-		FilaCircular fila = new FilaCircular(tamanho);
+		Fila fila = new Fila(tamanho);
 		String[] entrada;
 		String option;
 		do {
 			entrada = sc.nextLine().split(" ");
 			option = entrada[0];
-			
-			switch (option) {
-			case "add":
+			if ("add".equals(option)) {
 				int elemento = Integer.parseInt(entrada[1]);
 				fila.add(elemento);
-				break;			
-			case "remove":
-				fila.remove();
-				break;
-			case "print":
-				System.out.println(fila.print());
-				break;			
-			case "element":
-				System.out.println(fila.element());
-				break;			
-			default:
-				break;
 			}
-	
-		} while (!option.equals("end"));
+			if ("remove".equals(option)) {
+				fila.remove();
+			}
+			if ("print".equals(option)) {
+				System.out.println(fila.print());
+			}
+			if ("element".equals(option)) {
+				System.out.println(fila.element());
+			}	
+		} while (!option.equals("end"));		
 		sc.close();
 	}
 
