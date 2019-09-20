@@ -10,6 +10,9 @@
 	<classpathentry kind="src" path="SelectionSortPassoAPasso"/>
 	<classpathentry kind="src" path="FilaArray"/>
 	<classpathentry kind="src" path="FilaArrayCircular"/>
+	<classpathentry kind="src" path="PilhaArray"/>
+	<classpathentry kind="src" path="InverteFrase"/>
+	<classpathentry kind="src" path="Parenteses"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
