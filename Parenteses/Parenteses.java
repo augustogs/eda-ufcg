@@ -15,7 +15,7 @@ public class Parenteses {
 		int j = entrada.length() - 1;
 		char[] aux = entrada.toCharArray();
 
-		while (i <= j) {
+		while (i <= j && result) {
 			if (aux[i] != '(' || aux[j] != ')') {
 				result = false;
 			}
