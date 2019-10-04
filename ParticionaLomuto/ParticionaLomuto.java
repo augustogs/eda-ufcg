@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class ParticionaLomuto {
@@ -37,7 +38,7 @@ public class ParticionaLomuto {
 		for (int i = 0; i < array.length; i++) {
 			v[i] = Integer.parseInt(array[i]);
 		}
-		return v;	
-	}
+		return v;
+	}	
 
 }

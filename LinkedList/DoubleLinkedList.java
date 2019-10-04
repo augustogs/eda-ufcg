@@ -26,11 +26,7 @@ class DoubleLinkedList {
 	}
 	
 	public int size() {
-		if (isEmpty()) {
-			return 0;
-		} else {
-			return size(this.head);
-		}
+		return size(this.head);
 	}
 		
 	private int size(DoubleNode node) {
@@ -39,11 +35,7 @@ class DoubleLinkedList {
 	}
 
 	public int soma() {
-		if (isEmpty()) {
-			return 0;
-		} else {
-			return soma(this.head);
-		}
+		return soma(this.head);
 	}
 	
 	private int soma(DoubleNode node) {
@@ -52,13 +44,79 @@ class DoubleLinkedList {
 	}	
 		
 	public boolean isSorted() {
-		return isSorted(this.head);
+		if (this.head == null) return true;
+		else return isSorted(this.head);
 	}
 	
 	private boolean isSorted(DoubleNode node) {
-		if (node == null) return true;
-		if (node.value > node.next.value) return false;
-		else return true;
+		if (node.next == null) return true;
+		else if (node.value > node.next.value) return false;
+		return isSorted(node.next);
+	}
+	
+	public void add(int index, int elemento) {
+		if (index >= 0 && index <= this.size()) {
+			DoubleNode newNode = new DoubleNode(elemento);
+			if (isEmpty()) {
+				this.head = newNode;
+			}
+			else if (index == 0) {
+				this.head.prev = newNode;
+				newNode.next = this.head;
+				this.head = newNode;
+			}
+			else {				
+				DoubleNode aux = this.head;
+				DoubleNode last = this.head;
+				int i = 0;
+				while (i < index) {
+					last = aux;
+					aux = aux.next;
+					i++;
+				}		
+				if (aux == null) {
+					newNode.prev = last;
+					last.next = newNode;
+				} else {
+					newNode.next = aux;
+					last.next = newNode;
+					aux.prev = newNode;
+					newNode.prev = last;									
+				}
+			}
+		}		
+	}
+	
+	public void remove(int index) {
+		if (!this.isEmpty() && index >= 0 && index < this.size()) {
+			if (index == 0 && this.head.next == null) {
+				this.head = null;
+			} 
+			else if (index == 0) {
+				this.head = this.head.next;
+				this.head.prev = null;				
+			}
+			else {
+				DoubleNode aux = this.head;
+				int i = 0;
+				while (i < index) {
+					aux = aux.next;
+					i++;
+				}
+				if (index == this.size() - 1) {
+					aux.prev.next = null;
+					aux.prev = null;					
+				} else {
+					aux.next.prev = aux.prev;
+					aux.prev.next = aux.next;
+					aux.next = null;
+				}			
+			}
+		}
+	}
+	
+	public boolean isEmpty() {
+		return this.head == null;
 	}
 	
 	public String print() {
@@ -68,7 +126,7 @@ class DoubleLinkedList {
 			return this.print(this.head);				
 		}
 	}
-	
+
 	//Metodo auxiliar para o print.
 	private String print(DoubleNode n) {
 		String result = "";
@@ -79,20 +137,7 @@ class DoubleLinkedList {
 		}
 		return result.trim();
 	}
-
-	/////////////////////////////////////////// iterativos;
 	
-	public void add(int index, int elemento) {
-		
-	}
-	
-	public void remove(int index) {
-		
-	}
-	
-	private boolean isEmpty() {
-		return this.head == null;
-	}
 		
 }
 
@@ -107,5 +152,5 @@ class DoubleNode {
 		this.next = null;
 		this.prev = null;		
 	}	
-	
+
 }
