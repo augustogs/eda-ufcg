@@ -17,11 +17,11 @@ class MainBST {
 	}
 	
 	private static int[] toIntArray(String[] array) {
-		int[] arrat = new int[array.length];
+		int[] aux = new int[array.length];
 		for (int i = 0; i < array.length; i++) {
-			arrat[i] = Integer.parseInt(array[i]);
+			aux[i] = Integer.parseInt(array[i]);
 		}
-		return arrat;	
+		return aux;	
 	}
 	
 	private static void montaBST(int[] seq, BuscaBST bst) {
