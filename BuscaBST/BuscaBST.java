@@ -67,11 +67,13 @@ class BuscaBST {
 	}
 	
 	public void search(int value) {
-		if (value == this.root.value) {
-			System.out.println("[" + value + "]");
-		} else {
-			ArrayList<Integer> array = new ArrayList<>();
-			search(value, this.root, array);			
+		if (!isEmpty()) {
+			if (value == this.root.value) {
+				System.out.println("[" + value + "]");
+			} else {
+				ArrayList<Integer> array = new ArrayList<>();
+				search(value, this.root, array);			
+			}			
 		}
 	}
 
