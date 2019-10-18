@@ -19,6 +19,7 @@
 	<classpathentry kind="src" path="BuscaBST"/>
 	<classpathentry kind="src" path="AlturaBST"/>
 	<classpathentry kind="src" path="MaxBST"/>
+	<classpathentry kind="src" path="BFS"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="bin"/>

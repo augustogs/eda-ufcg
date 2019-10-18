@@ -1,5 +1,7 @@
-package maxbst;
+package bfs;
 
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 class MainBST {
@@ -8,10 +10,10 @@ class MainBST {
 		Scanner sc = new Scanner(System.in);
 		
 		int[] seq = toIntArray(sc.nextLine().split(" "));
-		MaxBST bst = new MaxBST();
+		BFS bst = new BFS();
 		montaBST(seq, bst);
 		
-		bst.max();
+		bst.bfs();
 		
 		sc.close();
 	}
@@ -24,35 +26,42 @@ class MainBST {
 		return aux;	
 	}
 	
-	private static void montaBST(int[] seq, MaxBST bst) {
+	private static void montaBST(int[] seq, BFS bst) {
 		for (int i = 0; i < seq.length; i++) {
 			bst.add(seq[i]);
 		}
 	}
 }
 
-public class MaxBST {
+class BFS {
 	
 	private NodeBST root;
 	
-	public MaxBST() {	
+	public BFS() {	
+	}
+	
+	public void bfs() {
+		if (!this.isEmpty()) {
+			Deque<NodeBST> fila = new LinkedList<NodeBST>();
+			fila.addLast(this.root);
+			
+			String result = "";
+			while (!fila.isEmpty()) {
+				NodeBST aux = fila.remove();
+				result += aux.value + " ";
+				if (aux.left != null) {
+					fila.addLast(aux.left);
+				}
+				if (aux.right != null) {
+					fila.addLast(aux.right);
+				}
+			}
+			System.out.println(result.trim());
+		}
 	}
 	
 	public boolean isEmpty() {
 		return this.root == null;
-	}
-	
-	public void max() {
-		max(this.root, "");
-	}
-
-	private void max(NodeBST node, String result) {
-		if (node != null) {
-			result += node.value + " ";
-			max(node.right, result);
-		} else {
-			System.out.println(result.trim());
-		}
 	}
 	
 	public void add(int value) {
@@ -78,7 +87,7 @@ public class MaxBST {
 			}
 		}
 	}
-
+	
 }
 
 class NodeBST {
