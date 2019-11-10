@@ -4,16 +4,16 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-class MainBST {
+class Main {
 	
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		
 		int[] seq = toIntArray(sc.nextLine().split(" "));
-		BFS bst = new BFS();
+		BST bst = new BST();
 		montaBST(seq, bst);
 		
-		bst.bfs();
+		bst.bfsDireita();
 		sc.close();
 	}
 	
@@ -25,34 +25,34 @@ class MainBST {
 		return aux;	
 	}
 	
-	private static void montaBST(int[] seq, BFS bst) {
+	private static void montaBST(int[] seq, BST bst) {
 		for (int i = 0; i < seq.length; i++) {
 			bst.add(seq[i]);
 		}
 	}
 }
 
-class BFS {
+class BST {
 	
-	private NodeBST root;
+	private Node root;
 	
-	public BFS() {	
+	public BST() {	
 	}
 	
-	public void bfs() {
+	public void bfsDireita() {
 		if (!this.isEmpty()) {
-			Deque<NodeBST> fila = new LinkedList<NodeBST>();
+			Deque<Node> fila = new LinkedList<Node>();
 			fila.addLast(this.root);
 			
 			String result = "";
 			while (!fila.isEmpty()) {
-				NodeBST aux = fila.remove();
+				Node aux = fila.remove();
 				result += aux.value + " ";
-				if (aux.left != null) {
-					fila.addLast(aux.left);
-				}
 				if (aux.right != null) {
 					fila.addLast(aux.right);
+				}
+				if (aux.left != null) {
+					fila.addLast(aux.left);
 				}
 			}
 			System.out.println(result.trim());
@@ -65,22 +65,22 @@ class BFS {
 	
 	public void add(int value) {
 		if (isEmpty()) {
-			this.root = new NodeBST(value);
+			this.root = new Node(value);
 		} else {
 			this.add(value, this.root);
 		}
 	}
 	
-	private void add(int value, NodeBST node) {
+	private void add(int value, Node node) {
 		if (value < node.value) {
 			if (node.left == null) {
-				node.left = new NodeBST(value);
+				node.left = new Node(value);
 			} else {
 				add(value, node.left);
 			}
 		} else {
 			if (node.right == null) {
-				node.right = new NodeBST(value);
+				node.right = new Node(value);
 			} else {
 				add(value, node.right);
 			}
@@ -89,13 +89,13 @@ class BFS {
 	
 }
 
-class NodeBST {
+class Node {
 	
 	protected int value;
-	protected NodeBST left;
-	protected NodeBST right;
+	protected Node left;
+	protected Node right;
 	
-	public NodeBST(int value) {
+	public Node(int value) {
 		this.value = value;
 		this.left = null;
 		this.right = null;
