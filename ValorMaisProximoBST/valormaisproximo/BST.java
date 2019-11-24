@@ -29,7 +29,7 @@ class Main {
 
 	private static void montaBST(int[] seq, BST bst) {
 		for (int i = 0; i < seq.length; i++) {
-			bst.add(seq[i]);
+			bst.insert(seq[i]);
 		}
 	}
 }
@@ -39,103 +39,34 @@ class BST {
 	private Node root;
 
 	public BST() {
-		
+		this.root = new Node(null);
 	}
 
 	public void valorMaisProximo(int n) {
-		int result = 0;
+		int result = -1;
 		
-		// representa a diferenca entre o valor dos nos, quando mais proxima de 0 mais o numero eh proximo.
+		// representa a diferenca entre o valor do no e o n procurado, quanto mais proxima de 0 mais proximo estamos do no. 
 		int distAtual = Integer.MAX_VALUE;	
 				
 		boolean achou = false;
 		Node aux = this.root;
-		
-		//achou pode ser substituido por dist = 0;
-		while (!achou && aux != null && aux.left != null && aux.right != null) {
-			if (aux.value == n) {
-				result = aux.value;
+		while (!aux.isEmpty() && !achou) {
+			if (n == aux.getValue()) {
+				result = n;
 				achou = true;
 			} else {
-				int distNode = Math.abs(n - aux.value);
-				int distLeft = Math.abs(n - aux.left.value);
-				int distRight = Math.abs(n - aux.right.value);
-				
-				if (distAtual > distLeft || distAtual > distRight) {
-					
-					if (distNode < distLeft && distNode < distRight) {
-						if (distNode < distAtual) {
-							result = aux.value;
-							distAtual = distNode;
-							if (distLeft < distRight) {
-							aux = aux.left;
-							} else {
-							aux = aux.right;
-							}
-						}
-					}
-					
-					if (distLeft < distNode && distLeft < distRight) {
-						if (distLeft < distAtual) {
-							result = aux.left.value;
-							distAtual = distLeft;
-							aux = aux.left;
-						}	
-					}
-					
-					if (distRight < distNode && distRight < distLeft) {
-						if (distRight < distAtual) {
-							result = aux.right.value;
-							distAtual = distRight;
-							aux = aux.right;
-						}
-					}
+				int distNode  = Math.abs(aux.getValue() - n);
+				if (distNode < distAtual) {
+					distAtual = distNode;
+					result = aux.getValue();
+				}
+				else if (n > aux.getValue()) {
+					aux = aux.getRight();
 				}
 				else {
-					achou = true;				
-				}
-				
-				//impl com 2 erros.
-//				if (distNode < distAtual) {
-//					result = aux.value;
-//					distAtual = distNode;
-//					if (distLeft < distRight) {
-//						aux = aux.left;
-//					} else {
-//						aux = aux.right;
-//					}
-//				}
-				
-//				if (distLeft < distAtual) {
-//					result = aux.left.value;
-//					distAtual = distLeft;
-//					aux = aux.left;
-//				}
-//								
-//				if (distRight < distAtual) {
-//					result = aux.right.value;
-//					distAtual = distRight;
-//					aux = aux.right;
-//				}
-			} 
-			
-//			else if (n > aux.value) {
-//				int novaDist = Math.abs(n - aux.value);
-//				if (novaDist < dist) {
-//					result = aux.value;
-////					dist = novaDist;
-//				}
-//				aux = aux.right;
-//			}
-//			else if (n < aux.value) {
-//				int novaDist = Math.abs(n - aux.value);
-//				if (novaDist < dist) {
-//					result = aux.value;
-////					dist = novaDist;
-//				}
-//				aux = aux.left;
-//			}
-			
+					aux = aux.getLeft();
+				}				
+			}
 		}
 		System.out.println(result);
 	}
@@ -147,39 +78,34 @@ class BST {
 	}
 
 	private void preOrder(Node node, ArrayList<Integer> array) {
-		if (node != null) {
-			array.add(node.value);
-			preOrder(node.left, array);
-			preOrder(node.right, array);
+		if (!node.isEmpty()) {
+			array.add(node.getValue());
+			preOrder(node.getLeft(), array);
+			preOrder(node.getRight(), array);
 		}
 	}
-
 
 	public boolean isEmpty() {
 		return this.root == null;
 	}
 
-	public void add(int value) {
-		if (isEmpty()) {
-			this.root = new Node(value);
-		} else {
-			this.add(value, this.root);
-		}
+	public void insert(int value) {
+		this.insert(value, this.root);
 	}
 
-	private void add(int value, Node node) {
-		if (value < node.value) {
-			if (node.left == null) {
-				node.left = new Node(value);
-			} else {
-				add(value, node.left);
-			}
-		} else {
-			if (node.right == null) {
-				node.right = new Node(value);
-			} else {
-				add(value, node.right);
-			}
+	private void insert(int value, Node node) {
+		if (node.isEmpty()) {
+			node.setValue(value);
+			node.setLeft(new Node(null));
+			node.getLeft().setParent(node);
+			node.setRight(new Node(null));
+			node.getRight().setParent(node);
+		} 
+		else if (value > node.getValue()) {
+			this.insert(value, node.getRight());
+		}
+		else if (value < node.getValue()) {
+			insert(value, node.getLeft());
 		}
 	}
 
@@ -187,14 +113,51 @@ class BST {
 
 class Node {
 
-	protected int value;
-	protected Node left;
-	protected Node right;
+	private Integer value;
+	private Node parent;
+	private Node left;
+	private Node right;
 
-	public Node(int value) {
+	public Node(Integer value) {
 		this.value = value;
+		this.parent = null;
 		this.left = null;
 		this.right = null;
 	}
+	
+	public Integer getValue() {
+		return value;
+	}
 
+	public boolean isEmpty() {
+		return this.value == null;
+	}
+	
+	public Node getLeft() {
+		return this.left;
+	}
+	
+	public Node getRight() {
+		return this.right;
+	}
+	
+	public Node getParent() {
+		return this.parent;
+	}
+	
+	public void setLeft(Node node) {
+		this.left = node;
+	}
+	
+	public void setRight(Node node) {
+		this.right = node;
+	}
+	
+	public void setValue(Integer value) {
+		this.value = value;
+	}
+	
+	public void setParent(Node node) {
+		this.parent = node;
+	}
 }
