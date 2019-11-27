@@ -26,6 +26,7 @@
 	<classpathentry kind="src" path="BuildHeap"/>
 	<classpathentry kind="src" path="Rotacoes"/>
 	<classpathentry kind="src" path="PredecessorBST"/>
+	<classpathentry kind="src" path="SucessorBST"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="bin"/>
