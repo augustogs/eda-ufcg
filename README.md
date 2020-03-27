@@ -1,2 +1,5 @@
 # EDA
-Repositórios de Estrutura de Dados.
+Repositório com algorítmos e questões do TST-EDA implementados. 
+
+
+ 
